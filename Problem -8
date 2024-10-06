@@ -1,0 +1,64 @@
+Write a C++ program to implement a class called Date that has private member variables for day,
+month, and year. Include member functions to set and get these variables, as well as to validate if
+the date is valid.using namespace std
+
+#include <iostream>
+using namespace std;
+class Date {
+private:
+    int day;
+    int month;
+    int year;
+  bool isLeapYear(int year) const {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+ bool isValidDate(int d, int m, int y) const {
+        if (y < 1 || m < 1 || m > 12 || d < 1) {
+            return false;
+        }
+int daysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+  if (m == 2 && isLeapYear(y)) {
+            daysInMonth[1] = 29;
+    return d <= daysInMonth[m - 1];
+    }
+public:
+    Date() : day(1), month(1), year(2000) {
+    Date(int d, int m, int y) {
+        if (isValidDate(d, m, y)) {
+            day = d;
+            month = m;
+            year = y;
+        } else {
+            cerr << "Invalid date. Setting default date (1/1/2000)." << endl;
+            day = 1;
+            month = 1;
+            year = 2000;
+        }
+    }
+void setDate(int d, int m, int y) {
+        if (isValidDate(d, m, y)) {
+            day = d;
+            month = m;
+            year = y;
+        } else {
+            cerr << "Invalid date!" << endl;
+        }
+  }
+    int getDay() const { return day; }
+    int getMonth() const { return month; }
+    int getYear() const { return year; }
+
+    void displayDate() const {
+        cout << day << "/" << month << "/" << year << endl;
+    }
+};
+int main() {
+    Date date1;
+   date1.displayDate(); 
+    date1.displayDate();
+  date1.setDate(31, 11, 2023); 
+   date1.displayDate();
+ Date date2(15, 8, 2021);
+    date2.displayDate();
+return 0;
+}
